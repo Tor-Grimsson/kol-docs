@@ -1,4 +1,10 @@
 {
   "name": "kolkrabbi-docs",
-  "packageManager": "yarn@4.11.0"
+  "private": true,
+  "packageManager": "yarn@4.11.0",
+  "workspaces": [
+    "apps/*",
+    "packages/*",
+    "docs"
+  ]
 }

@@ -1,0 +1,26 @@
+{
+  "name": "@kol/fontviewer",
+  "version": "1.0.0",
+  "description": "Independent FontViewer module for variable font display and interaction",
+  "type": "module",
+  "main": "src/index.js",
+  "scripts": {
+    "build": "echo 'fontviewer is plain JS'",
+    "lint": "eslint src --ext .js,.jsx",
+    "typecheck": "echo 'no types in fontviewer'"
+  },
+  "dependencies": {
+    "opentype.js": "^1.3.4"
+  },
+  "peerDependencies": {
+    "react": "^18.0.0"
+  },
+  "keywords": [
+    "font",
+    "typography",
+    "variable-fonts",
+    "opentype",
+    "foundry"
+  ],
+  "license": "MIT"
+}
