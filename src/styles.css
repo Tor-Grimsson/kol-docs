@@ -1,0 +1,1137 @@
+@import "tailwindcss";
+@import "./index.css";
+
+/**
+ * Simplified Design System for Wiki/Docs
+ * Consolidates: theme.css + components.css + utilities.css + docs.css
+ */
+
+/* ============================================================================
+ * BASE STYLES
+ * ============================================================================ */
+
+@layer base {
+  html {
+    background: var(--kol-surface-primary);
+    color: var(--kol-surface-on-primary);
+  }
+
+  body {
+    background: var(--kol-surface-primary);
+    color: var(--kol-surface-on-primary);
+    font-family: var(--kol-font-family-body);
+  }
+
+  #root {
+    background: var(--kol-surface-primary);
+    color: var(--kol-surface-on-primary);
+  }
+}
+
+/* ============================================================================
+ * DESIGN TOKENS - THEME
+ * ============================================================================ */
+
+@theme {
+  /* Fonts */
+  --kol-font-family-body: 'Inter Tight', system-ui, -apple-system, sans-serif;
+  --kol-font-family-heading: 'Inter Tight', system-ui, sans-serif;
+  --kol-font-family-mono: 'SFMono-Regular', Consolas, 'Liberation Mono', Menlo, monospace;
+
+  /* Brand Colors */
+  --kol-color-brand-dark: #1e1e21;
+  --kol-color-brand-light: #fcfbf8;
+  --kol-color-brand-yellow: #f5d245;
+  --kol-color-absolute-black: #000000;
+  --kol-color-absolute-white: #ffffff;
+
+  /* Surfaces - Light Mode */
+  --kol-surface-primary: #fafafa;
+  --kol-surface-on-primary: #121215;
+  --kol-surface-secondary: #f2f2f2;
+  --kol-surface-on-secondary: #19191d;
+  --kol-surface-inverse: #0e0e11;
+  --kol-surface-on-inverse: #fcfbf8;
+
+  /* Borders */
+  --kol-border-default: color-mix(in srgb, var(--kol-surface-on-primary) 8%, transparent);
+  --kol-border-subtle: color-mix(in srgb, var(--kol-surface-on-primary) 4%, transparent);
+
+  /* Border Radius - 4px ALWAYS */
+  --radius-none: 0;
+  --radius-sm: 4px;
+  --radius: 4px;
+  --radius-md: 4px;
+  --radius-lg: 4px;
+  --radius-xl: 4px;
+  --radius-2xl: 4px;
+  --radius-3xl: 4px;
+  --radius-full: 9999px;
+}
+
+/* Dark Mode */
+@media (prefers-color-scheme: dark) {
+  @theme {
+    --kol-surface-primary: #0e0e11;
+    --kol-surface-on-primary: #fcfbf8;
+    --kol-surface-secondary: #1a1a1e;
+    --kol-surface-on-secondary: #f8f8f8;
+    --kol-surface-inverse: #fafafa;
+    --kol-surface-on-inverse: #121215;
+  }
+}
+
+/* ============================================================================
+ * TYPOGRAPHY COMPONENTS
+ * ============================================================================ */
+
+@layer components {
+  /* Headings */
+  .kol-heading-xl {
+    font-family: var(--kol-font-family-heading);
+    font-weight: 600;
+    font-size: clamp(32px, 4vw, 48px);
+    line-height: 110%;
+    color: var(--kol-surface-on-primary);
+  }
+
+  .kol-heading-lg {
+    font-family: var(--kol-font-family-heading);
+    font-weight: 600;
+    font-size: clamp(24px, 3vw, 32px);
+    line-height: 120%;
+    color: var(--kol-surface-on-primary);
+  }
+
+  .kol-heading-md {
+    font-family: var(--kol-font-family-heading);
+    font-weight: 600;
+    font-size: clamp(18px, 2vw, 24px);
+    line-height: 130%;
+    color: var(--kol-surface-on-primary);
+  }
+
+  .kol-heading-sm {
+    font-family: var(--kol-font-family-heading);
+    font-weight: 600;
+    font-size: clamp(16px, 1.5vw, 18px);
+    line-height: 140%;
+    color: var(--kol-surface-on-primary);
+  }
+
+  /* Body Text */
+  .kol-body-base {
+    font-family: var(--kol-font-family-body);
+    font-weight: 400;
+    font-size: 16px;
+    line-height: 150%;
+    color: var(--kol-surface-on-primary);
+  }
+
+  .kol-body-sm {
+    font-family: var(--kol-font-family-body);
+    font-weight: 400;
+    font-size: 14px;
+    line-height: 150%;
+    color: var(--kol-surface-on-primary);
+  }
+
+  .kol-body-xs {
+    font-family: var(--kol-font-family-body);
+    font-weight: 400;
+    font-size: 12px;
+    line-height: 150%;
+    color: color-mix(in srgb, var(--kol-surface-on-primary) 80%, transparent);
+  }
+
+  /* Helper Text - RightGrotesk Mono 12px */
+  .kol-helper-xs {
+    font-family: var(--kol-font-family-mono);
+    font-weight: 470;
+    font-size: 12px;
+    line-height: 100%;
+    letter-spacing: 0.1em;
+    color: var(--kol-surface-on-primary);
+  }
+
+  .kol-mono-xs {
+    font-family: var(--kol-font-family-mono);
+    font-weight: 470;
+    font-size: clamp(10px, 0.8vw, 14px);
+    line-height: 120%;
+    color: var(--kol-surface-on-primary);
+  }
+
+  /* Code */
+  .kol-code-inline {
+    font-family: var(--kol-font-family-mono);
+    font-size: 14px;
+    background: color-mix(in srgb, var(--kol-surface-on-primary) 8%, transparent);
+    padding: 2px 6px;
+    border-radius: 4px;
+  }
+
+  .kol-code-block {
+    font-family: var(--kol-font-family-mono);
+    font-size: 14px;
+    line-height: 150%;
+    background: color-mix(in srgb, var(--kol-surface-on-primary) 4%, transparent);
+    padding: 16px;
+    border-radius: 4px;
+    overflow-x: auto;
+  }
+
+  /* Links */
+  .kol-link {
+    color: var(--kol-surface-on-primary);
+    text-decoration: underline;
+    text-decoration-color: color-mix(in srgb, var(--kol-surface-on-primary) 24%, transparent);
+    text-underline-offset: 2px;
+    transition: text-decoration-color 0.2s;
+  }
+
+  .kol-link:hover {
+    text-decoration-color: var(--kol-surface-on-primary);
+  }
+
+  /* Buttons */
+  .kol-btn {
+    font-family: var(--kol-font-family-body);
+    font-weight: 500;
+    font-size: 14px;
+    padding: 8px 16px;
+    border-radius: 4px;
+    border: 1px solid var(--kol-border-default);
+    background: var(--kol-surface-secondary);
+    color: var(--kol-surface-on-secondary);
+    cursor: pointer;
+    transition: all 0.2s;
+  }
+
+  .kol-btn:hover {
+    background: color-mix(in srgb, var(--kol-surface-on-primary) 8%, var(--kol-surface-secondary));
+  }
+
+  .kol-btn-primary {
+    background: var(--kol-surface-on-primary);
+    color: var(--kol-surface-primary);
+    border-color: var(--kol-surface-on-primary);
+  }
+
+  .kol-btn-primary:hover {
+    background: color-mix(in srgb, var(--kol-surface-primary) 10%, var(--kol-surface-on-primary));
+  }
+
+  /* Cards */
+  .kol-card {
+    background: var(--kol-surface-secondary);
+    border: 1px solid var(--kol-border-default);
+    border-radius: 4px;
+    padding: 16px;
+  }
+
+  /* Dividers */
+  .kol-divider {
+    border-bottom: 1px solid var(--kol-border-subtle);
+  }
+}
+
+/* ============================================================================
+ * UTILITIES
+ * ============================================================================ */
+
+@layer utilities {
+  /* Layout */
+  .flex-center {
+    @apply flex justify-center items-center;
+  }
+
+  .absolute-center {
+    @apply absolute top-1/2 left-1/2;
+    transform: translate(-50%, -50%);
+  }
+
+  /* Auto Text & Backgrounds */
+  .text-auto {
+    color: var(--kol-surface-on-primary);
+  }
+
+  .text-auto-inverse {
+    color: var(--kol-surface-on-inverse);
+  }
+
+  .bg-auto {
+    background-color: var(--kol-surface-primary);
+  }
+
+  .bg-auto-inverse {
+    background-color: var(--kol-surface-inverse);
+  }
+
+  .border-auto {
+    border-color: var(--kol-border-default);
+  }
+
+  /* Surface Utilities */
+  .bg-surface-primary {
+    background-color: var(--kol-surface-primary);
+    color: var(--kol-surface-on-primary);
+  }
+
+  .bg-surface-secondary {
+    background-color: var(--kol-surface-secondary);
+    color: var(--kol-surface-on-secondary);
+  }
+
+  .bg-surface-tertiary {
+    background-color: var(--kol-surface-tertiary);
+    color: var(--kol-surface-on-tertiary);
+  }
+
+  .bg-surface-inverse {
+    background-color: var(--kol-surface-inverse);
+    color: var(--kol-surface-on-inverse);
+  }
+
+  /* Container Utilities */
+  .bg-container-primary {
+    background-color: var(--kol-container-primary);
+    color: var(--kol-container-on-primary);
+  }
+
+  .bg-container-secondary {
+    background-color: var(--kol-container-secondary);
+    color: var(--kol-container-on-secondary);
+  }
+
+  .bg-container-elevated {
+    background-color: var(--kol-container-elevated);
+    color: var(--kol-container-on-elevated);
+  }
+
+  /* Accent Utilities */
+  .bg-accent-primary {
+    background-color: var(--kol-accent-primary);
+    color: var(--kol-accent-on-primary);
+  }
+
+  .bg-accent-primary-muted {
+    background-color: var(--kol-accent-primary-muted);
+  }
+
+  /* Status Utilities */
+  .bg-status-danger {
+    background-color: var(--kol-status-danger);
+    color: var(--kol-status-on-danger);
+  }
+
+  .text-status-danger {
+    color: var(--kol-status-danger);
+  }
+
+  /* Opacity Background Utilities */
+  .bg-fg-01 { background-color: color-mix(in srgb, var(--kol-surface-on-primary) 1%, transparent); }
+  .bg-fg-02 { background-color: color-mix(in srgb, var(--kol-surface-on-primary) 2%, transparent); }
+  .bg-fg-04 { background-color: color-mix(in srgb, var(--kol-surface-on-primary) 4%, transparent); }
+  .bg-fg-08 { background-color: color-mix(in srgb, var(--kol-surface-on-primary) 8%, transparent); }
+  .bg-fg-12 { background-color: color-mix(in srgb, var(--kol-surface-on-primary) 12%, transparent); }
+  .bg-fg-16 { background-color: color-mix(in srgb, var(--kol-surface-on-primary) 16%, transparent); }
+  .bg-fg-24 { background-color: color-mix(in srgb, var(--kol-surface-on-primary) 24%, transparent); }
+  .bg-fg-32 { background-color: color-mix(in srgb, var(--kol-surface-on-primary) 32%, transparent); }
+  .bg-fg-48 { background-color: color-mix(in srgb, var(--kol-surface-on-primary) 48%, transparent); }
+  .bg-fg-64 { background-color: color-mix(in srgb, var(--kol-surface-on-primary) 64%, transparent); }
+  .bg-fg-80 { background-color: color-mix(in srgb, var(--kol-surface-on-primary) 80%, transparent); }
+
+  /* Opacity Border Utilities */
+  .border-fg { border-color: var(--kol-surface-on-primary); }
+  .border-fg-01 { border-color: color-mix(in srgb, var(--kol-surface-on-primary) 1%, transparent); }
+  .border-fg-02 { border-color: color-mix(in srgb, var(--kol-surface-on-primary) 2%, transparent); }
+  .border-fg-04 { border-color: color-mix(in srgb, var(--kol-surface-on-primary) 4%, transparent); }
+  .border-fg-08 { border-color: color-mix(in srgb, var(--kol-surface-on-primary) 8%, transparent); }
+  .border-fg-12 { border-color: color-mix(in srgb, var(--kol-surface-on-primary) 12%, transparent); }
+  .border-fg-16 { border-color: color-mix(in srgb, var(--kol-surface-on-primary) 16%, transparent); }
+  .border-fg-24 { border-color: color-mix(in srgb, var(--kol-surface-on-primary) 24%, transparent); }
+  .border-fg-32 { border-color: color-mix(in srgb, var(--kol-surface-on-primary) 32%, transparent); }
+  .border-fg-48 { border-color: color-mix(in srgb, var(--kol-surface-on-primary) 48%, transparent); }
+  .border-fg-64 { border-color: color-mix(in srgb, var(--kol-surface-on-primary) 64%, transparent); }
+
+  /* Divide Color Utilities */
+  .divide-fg-08 > :not([hidden]) ~ :not([hidden]) { border-color: color-mix(in srgb, var(--kol-surface-on-primary) 8%, transparent); }
+  .divide-fg-16 > :not([hidden]) ~ :not([hidden]) { border-color: color-mix(in srgb, var(--kol-surface-on-primary) 16%, transparent); }
+
+  /* Opacity Text Utilities */
+  .text-fg-01 { color: color-mix(in srgb, var(--kol-surface-on-primary) 1%, transparent); }
+  .text-fg-02 { color: color-mix(in srgb, var(--kol-surface-on-primary) 2%, transparent); }
+  .text-fg-04 { color: color-mix(in srgb, var(--kol-surface-on-primary) 4%, transparent); }
+  .text-fg-08 { color: color-mix(in srgb, var(--kol-surface-on-primary) 8%, transparent); }
+  .text-fg-12 { color: color-mix(in srgb, var(--kol-surface-on-primary) 12%, transparent); }
+  .text-fg-16 { color: color-mix(in srgb, var(--kol-surface-on-primary) 16%, transparent); }
+  .text-fg-24 { color: color-mix(in srgb, var(--kol-surface-on-primary) 24%, transparent); }
+  .text-fg-32 { color: color-mix(in srgb, var(--kol-surface-on-primary) 32%, transparent); }
+  .text-fg-48 { color: color-mix(in srgb, var(--kol-surface-on-primary) 48%, transparent); }
+  .text-fg-64 { color: color-mix(in srgb, var(--kol-surface-on-primary) 64%, transparent); }
+  .text-fg-80 { color: color-mix(in srgb, var(--kol-surface-on-primary) 80%, transparent); }
+  .text-fg-88 { color: color-mix(in srgb, var(--kol-surface-on-primary) 88%, transparent); }
+  .text-fg-96 { color: color-mix(in srgb, var(--kol-surface-on-primary) 96%, transparent); }
+
+  /* Hover Border Utilities */
+  .hover\:border-fg-08:hover { border-color: color-mix(in srgb, var(--kol-surface-on-primary) 8%, transparent); }
+  .hover\:border-fg-16:hover { border-color: color-mix(in srgb, var(--kol-surface-on-primary) 16%, transparent); }
+  .hover\:border-fg-24:hover { border-color: color-mix(in srgb, var(--kol-surface-on-primary) 24%, transparent); }
+
+  /* Hover Background Utilities */
+  .hover\:bg-fg-04:hover { background-color: color-mix(in srgb, var(--kol-surface-on-primary) 4%, transparent); }
+  .hover\:bg-fg-08:hover { background-color: color-mix(in srgb, var(--kol-surface-on-primary) 8%, transparent); }
+  .hover\:bg-fg-12:hover { background-color: color-mix(in srgb, var(--kol-surface-on-primary) 12%, transparent); }
+  .hover\:bg-fg-16:hover { background-color: color-mix(in srgb, var(--kol-surface-on-primary) 16%, transparent); }
+
+  /* Screen reader only */
+  .sr-only {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    padding: 0;
+    margin: -1px;
+    overflow: hidden;
+    clip: rect(0, 0, 0, 0);
+    white-space: nowrap;
+    border-width: 0;
+  }
+}
+
+/* ============================================================================
+ * ANIMATIONS
+ * ============================================================================ */
+
+@keyframes fade-in {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+@keyframes slide-up {
+  from {
+    opacity: 0;
+    transform: translateY(1rem);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* ============================================================================
+ * DOCUMENTATION COMPONENTS
+ * ============================================================================ */
+
+/* DocsArticle - Main content container */
+.docs-article {
+  color: var(--kol-surface-on-primary);
+  line-height: 1.7;
+}
+
+.docs-article > * + * {
+  margin-top: 1.5rem;
+}
+
+.wiki-article-section {
+  background: var(--kol-surface-primary);
+  padding: 2rem;
+  border-radius: 4px;
+}
+
+/* DocsHeader - Headings system */
+.docs-header {
+  margin-bottom: 2rem;
+}
+
+.docs-heading {
+  color: var(--kol-surface-on-primary);
+  scroll-margin-top: 6rem;
+  position: relative;
+}
+
+.docs-heading:hover::before {
+  content: '#';
+  position: absolute;
+  left: -1.5rem;
+  color: color-mix(in srgb, var(--kol-surface-on-primary) 24%, transparent);
+  font-weight: 400;
+}
+
+.docs-subtitle {
+}
+
+.docs-meta {
+  padding-top: 1rem;
+  border-top: 1px solid var(--kol-border-subtle);
+}
+
+/* DocsPageHeader - Page-level header with breadcrumbs */
+.docs-page-header {
+  padding-bottom: 2rem;
+  border-bottom: 1px solid var(--kol-border-default);
+  margin-bottom: 3rem;
+}
+
+.docs-breadcrumbs ol {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.docs-page-title {
+  color: var(--kol-surface-on-primary);
+  letter-spacing: -0.02em;
+}
+
+/* DocsCodeBlock - Code display with copy button */
+.docs-code-block-wrapper {
+  position: relative;
+  margin: 1.5rem 0;
+  border-radius: 4px;
+  border: 1px solid var(--kol-border-default);
+  background: var(--kol-surface-secondary);
+  overflow: hidden;
+}
+
+.docs-code-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0.5rem 1rem;
+  border-bottom: 1px solid var(--kol-border-subtle);
+  background: color-mix(in srgb, var(--kol-surface-on-primary) 2%, transparent);
+}
+
+.docs-code-language {
+  font-family: var(--kol-font-family-mono);
+  font-size: 12px;
+  font-weight: 500;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  color: color-mix(in srgb, var(--kol-surface-on-primary) 64%, transparent);
+}
+
+.docs-code-copy-btn {
+  font-family: var(--kol-font-family-body);
+  font-size: 12px;
+  font-weight: 500;
+  padding: 4px 12px;
+  border-radius: 4px;
+  border: 1px solid var(--kol-border-default);
+  background: var(--kol-surface-primary);
+  color: var(--kol-surface-on-primary);
+  cursor: pointer;
+  transition: all 0.15s ease;
+}
+
+.docs-code-copy-btn:hover {
+  background: color-mix(in srgb, var(--kol-surface-on-primary) 4%, var(--kol-surface-primary));
+  border-color: color-mix(in srgb, var(--kol-surface-on-primary) 16%, transparent);
+}
+
+.docs-code-copy-btn:active {
+  transform: scale(0.98);
+}
+
+.docs-code-block {
+  margin: 0;
+  padding: 1rem;
+  font-family: var(--kol-font-family-mono);
+  font-size: 14px;
+  line-height: 1.6;
+  overflow-x: auto;
+  background: transparent;
+  color: var(--kol-surface-on-primary);
+}
+
+.docs-code-block code {
+  font-family: inherit;
+  font-size: inherit;
+  line-height: inherit;
+  background: transparent;
+  padding: 0;
+}
+
+/* Line numbers for code blocks */
+.docs-code-block.line-numbers {
+  counter-reset: line;
+}
+
+.docs-code-block.line-numbers code {
+  display: block;
+}
+
+.docs-code-block.line-numbers code::before {
+  counter-increment: line;
+  content: counter(line);
+  display: inline-block;
+  width: 2em;
+  margin-right: 1em;
+  text-align: right;
+  color: color-mix(in srgb, var(--kol-surface-on-primary) 32%, transparent);
+  user-select: none;
+}
+
+/* ============================================================================
+ * REFERENCE DESIGN LAYOUT
+ * ============================================================================ */
+
+/* Main Layout Container */
+.docs-layout {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  background: var(--kol-surface-primary);
+  color: var(--kol-surface-on-primary);
+}
+
+/* Top Navbar */
+.docs-navbar {
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  background: var(--kol-surface-secondary);
+  border-bottom: 1px solid var(--kol-border-default);
+}
+
+.docs-navbar-inner {
+  display: flex;
+  align-items: center;
+  gap: 2rem;
+  padding: 1rem 2rem;
+}
+
+.docs-navbar-logo {
+  font-size: 1.125rem;
+  font-weight: 700;
+  letter-spacing: 0.05em;
+  color: var(--kol-surface-on-primary);
+  text-decoration: none;
+}
+
+.docs-navbar-title {
+  font-size: 1.125rem;
+  font-weight: 600;
+  letter-spacing: 0.05em;
+  color: var(--kol-surface-on-primary);
+}
+
+.docs-navbar-tabs {
+  display: flex;
+  gap: 0.5rem;
+  margin-left: auto;
+}
+
+.docs-navbar-tab {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.5rem 1rem;
+  font-size: 0.875rem;
+  color: var(--kol-surface-on-primary); opacity: 0.64;
+  text-decoration: none;
+  border-radius: 4px;
+  transition: all 0.2s;
+}
+
+.docs-navbar-tab:hover {
+  background: var(--kol-bg-fg-08);
+  color: var(--kol-surface-on-primary);
+}
+
+.docs-navbar-tab-icon {
+  font-size: 0.75rem;
+}
+
+.docs-navbar-search {
+  margin-left: 1rem;
+}
+
+.docs-navbar-search-input {
+  padding: 0.5rem 1rem;
+  background: var(--kol-bg-fg-08);
+  border: 1px solid #3a3a3d;
+  border-radius: 4px;
+  color: var(--kol-surface-on-primary);
+  font-size: 0.875rem;
+  min-width: 200px;
+}
+
+.docs-navbar-search-input::placeholder {
+  color: var(--kol-surface-on-primary); opacity: 0.48;
+}
+
+/* 3-Column Layout Body */
+.docs-layout-body {
+  display: grid;
+  grid-template-columns: 280px 1fr 280px;
+  gap: 0;
+  flex: 1;
+  width: 100%;
+}
+
+/* Sidebars */
+.docs-sidebar {
+  background: var(--kol-surface-primary);
+  border-right: 1px solid var(--kol-border-default);
+  overflow-y: auto;
+  height: calc(100vh - 60px);
+  position: sticky;
+  top: 60px;
+}
+
+.docs-sidebar--right {
+  border-right: none;
+  border-left: 1px solid var(--kol-border-default);
+}
+
+.docs-sidebar-header {
+  padding: 2rem 1.5rem 1rem;
+  border-bottom: 1px solid var(--kol-border-default);
+}
+
+.docs-sidebar-title {
+  font-family: var(--kol-font-family-mono);
+  font-weight: 470;
+  font-size: 12px;
+  line-height: 100%;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--kol-surface-on-primary);
+  opacity: 0.64;
+}
+
+.docs-sidebar-content {
+  padding: 1rem 0;
+}
+
+.docs-sidebar-section {
+  padding: 1.5rem;
+  border-bottom: 1px solid var(--kol-border-default);
+}
+
+.docs-sidebar-section:last-child {
+  border-bottom: none;
+}
+
+.docs-sidebar-section-title {
+  font-family: var(--kol-font-family-mono);
+  font-weight: 470;
+  font-size: 12px;
+  line-height: 100%;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--kol-surface-on-primary);
+  opacity: 0.64;
+  margin-bottom: 1rem;
+}
+
+.docs-sidebar-empty {
+  font-size: 0.875rem;
+  color: var(--kol-surface-on-primary); opacity: 0.48;
+}
+
+/* Main Content */
+.docs-main-content {
+  background: var(--kol-surface-primary);
+  overflow-y: auto;
+}
+
+.docs-main-content-inner {
+  padding: 3rem 3rem;
+}
+
+/* Responsive */
+@media (max-width: 1200px) {
+  .docs-layout-body {
+    grid-template-columns: 240px 1fr 240px;
+  }
+}
+
+@media (max-width: 968px) {
+  .docs-layout-body {
+    grid-template-columns: 1fr;
+  }
+
+  .docs-sidebar {
+    display: none;
+  }
+
+  .docs-main-content-inner {
+    padding: 2rem 1.5rem;
+  }
+}
+
+/* ============================================================================
+ * SIDEBAR NAVIGATION
+ * ============================================================================ */
+
+.sidebar-nav-link {
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+  padding: 0.75rem 1rem;
+  border-radius: 4px;
+  text-decoration: none;
+  transition: background 0.2s;
+}
+
+.sidebar-nav-link:hover {
+  background: var(--kol-bg-fg-08);
+}
+
+.sidebar-nav-link.active {
+  background: var(--kol-bg-fg-08);
+  border-left: 2px solid #ffffff;
+}
+
+.sidebar-nav-version {
+  font-size: 0.75rem;
+  color: var(--kol-surface-on-primary); opacity: 0.48;
+  font-family: var(--kol-font-family-mono);
+}
+
+.sidebar-nav-title {
+  font-size: 0.875rem;
+  color: var(--kol-surface-on-primary);
+  font-weight: 500;
+}
+
+.sidebar-nav-link.active .sidebar-nav-title {
+  color: var(--kol-surface-on-primary);
+}
+
+/* Wiki section labels */
+.wiki-section-label {
+  font-size: 0.75rem;
+  font-weight: 600;
+  letter-spacing: 0.1em;
+  opacity: 0.48;
+  text-transform: uppercase;
+  padding-left: 1rem;
+}
+
+/* Prose styles for markdown content */
+.prose {
+  color: var(--kol-surface-on-primary);
+}
+
+.prose h1 {
+  font-size: 2.5rem;
+  font-weight: 700;
+  margin-top: 2rem;
+  margin-bottom: 1rem;
+  color: var(--kol-surface-on-primary);
+}
+
+.prose h2 {
+  font-size: 2rem;
+  font-weight: 600;
+  margin-top: 2rem;
+  margin-bottom: 1rem;
+  color: var(--kol-surface-on-primary);
+  padding-bottom: 0.5rem;
+  border-bottom: 1px solid var(--kol-border-default);
+}
+
+.prose h3 {
+  font-size: 1.5rem;
+  font-weight: 600;
+  margin-top: 1.5rem;
+  margin-bottom: 0.75rem;
+  color: var(--kol-surface-on-primary);
+}
+
+.prose h4 {
+  font-size: 1.25rem;
+  font-weight: 600;
+  margin-top: 1rem;
+  margin-bottom: 0.5rem;
+  color: var(--kol-surface-on-primary);
+}
+
+.prose p {
+  margin-bottom: 1rem;
+  line-height: 1.7;
+}
+
+.prose ul, .prose ol {
+  margin-bottom: 1rem;
+  padding-left: 2rem;
+}
+
+.prose li {
+  margin-bottom: 0.5rem;
+}
+
+.prose code {
+  background: var(--kol-bg-fg-08);
+  padding: 0.2rem 0.4rem;
+  border-radius: 4px;
+  font-size: 0.875em;
+  font-family: var(--kol-font-family-mono);
+}
+
+.prose pre {
+  background: var(--kol-bg-fg-08);
+  padding: 1rem;
+  border-radius: 4px;
+  overflow-x: auto;
+  margin-bottom: 1rem;
+}
+
+.prose pre code {
+  background: none;
+  padding: 0;
+}
+
+.prose a {
+  color: var(--kol-surface-on-primary); opacity: 0.64;
+  text-decoration: underline;
+}
+
+.prose a:hover {
+  color: var(--kol-surface-on-primary);
+}
+
+.prose table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-bottom: 1rem;
+}
+
+.prose th, .prose td {
+  border: 1px solid var(--kol-border-default);
+  padding: 0.5rem 1rem;
+  text-align: left;
+}
+
+.prose th {
+  background: var(--kol-bg-fg-08);
+  font-weight: 600;
+}
+
+.prose blockquote {
+  border-left: 3px solid #2a2a2d;
+  padding-left: 1rem;
+  margin-left: 0;
+  margin-bottom: 1rem;
+  color: var(--kol-surface-on-primary); opacity: 0.64;
+  font-style: italic;
+}
+
+/* ============================================================================
+ * QUICK SEARCH MODAL (Cmd+K)
+ * ============================================================================ */
+
+.quick-search-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.7);
+  backdrop-filter: blur(4px);
+  z-index: 1000;
+  display: flex;
+  align-items: flex-start;
+  justify-content: center;
+  padding-top: 20vh;
+}
+
+.quick-search-modal {
+  background: var(--kol-surface-primary);
+  border: 1px solid var(--kol-border-default);
+  border-radius: 4px;
+  width: 100%;
+  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.5);
+}
+
+.quick-search-input-wrapper {
+  padding: 1rem;
+  border-bottom: 1px solid var(--kol-border-default);
+}
+
+.quick-search-input {
+  width: 100%;
+  background: transparent;
+  border: none;
+  outline: none;
+  color: var(--kol-surface-on-primary);
+  font-size: 1.125rem;
+  font-weight: 500;
+}
+
+.quick-search-input::placeholder {
+  color: var(--kol-surface-on-primary); opacity: 0.48;
+}
+
+.quick-search-results {
+  max-height: 400px;
+  overflow-y: auto;
+}
+
+.quick-search-result {
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+  width: 100%;
+  padding: 0.75rem 1rem;
+  border: none;
+  background: transparent;
+  text-align: left;
+  cursor: pointer;
+  transition: background 0.15s;
+  border-bottom: 1px solid var(--kol-border-default);
+}
+
+.quick-search-result:hover,
+.quick-search-result.selected {
+  background: var(--kol-bg-fg-08);
+}
+
+.quick-search-result-version {
+  font-size: 0.75rem;
+  color: var(--kol-surface-on-primary); opacity: 0.48;
+  font-family: var(--kol-font-family-mono);
+}
+
+.quick-search-result-title {
+  font-size: 0.9375rem;
+  color: var(--kol-surface-on-primary);
+  font-weight: 500;
+}
+
+.quick-search-result.selected .quick-search-result-title {
+  color: var(--kol-surface-on-primary);
+}
+
+.quick-search-empty {
+  padding: 2rem;
+  text-align: center;
+  color: var(--kol-surface-on-primary); opacity: 0.48;
+  font-size: 0.875rem;
+}
+
+.quick-search-hints {
+  display: flex;
+  gap: 1rem;
+  padding: 0.75rem 1rem;
+  border-top: 1px solid var(--kol-border-default);
+  font-size: 0.75rem;
+  color: var(--kol-surface-on-primary); opacity: 0.48;
+}
+
+/* ============================================================================
+ * WIKI EDITOR
+ * ============================================================================ */
+
+.wiki-editor {
+}
+
+.wiki-editor-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 2rem;
+  padding-bottom: 1rem;
+  border-bottom: 1px solid var(--kol-border-default);
+}
+
+.wiki-editor-body {
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+}
+
+.wiki-editor-section {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.wiki-editor-label {
+  font-size: 0.875rem;
+  font-weight: 600;
+  color: var(--kol-surface-on-primary);
+}
+
+.wiki-editor-input {
+  padding: 0.75rem;
+  background: var(--kol-bg-fg-08);
+  border: 1px solid #3a3a3d;
+  border-radius: 4px;
+  color: var(--kol-surface-on-primary);
+  font-size: 1rem;
+  outline: none;
+  transition: border-color 0.2s;
+}
+
+.wiki-editor-input:focus {
+  border-color: var(--kol-surface-on-primary); opacity: 0.48;
+}
+
+.wiki-editor-input-small {
+  width: 80px;
+  text-align: center;
+}
+
+.wiki-editor-textarea {
+  padding: 1rem;
+  background: var(--kol-bg-fg-08);
+  border: 1px solid #3a3a3d;
+  border-radius: 4px;
+  color: var(--kol-surface-on-primary);
+  font-size: 1rem;
+  font-family: var(--kol-font-family-mono);
+  line-height: 1.6;
+  resize: vertical;
+  outline: none;
+  transition: border-color 0.2s;
+}
+
+.wiki-editor-textarea:focus {
+  border-color: var(--kol-surface-on-primary); opacity: 0.48;
+}
+
+.wiki-editor-preview {
+  padding: 1rem;
+  background: var(--kol-bg-fg-08);
+  border: 1px solid #3a3a3d;
+  border-radius: 4px;
+  color: var(--kol-surface-on-primary);
+  font-size: 0.875rem;
+  font-family: var(--kol-font-family-mono);
+  overflow-x: auto;
+  white-space: pre-wrap;
+}
+
+.wiki-editor-btn {
+  padding: 0.5rem 1rem;
+  background: var(--kol-bg-fg-08);
+  border: 1px solid #3a3a3d;
+  border-radius: 4px;
+  color: var(--kol-surface-on-primary);
+  font-size: 0.875rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.wiki-editor-btn:hover {
+  background: #3a3a3d;
+}
+
+.wiki-editor-btn-primary {
+  padding: 0.5rem 1rem;
+  background: #ffffff;
+  border: none;
+  border-radius: 4px;
+  color: #1a1a1d;
+  font-size: 0.875rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.wiki-editor-btn-primary:hover {
+  background: #e8e8e8;
+}
