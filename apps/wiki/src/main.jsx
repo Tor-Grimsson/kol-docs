@@ -1,12 +1,9 @@
 import { StrictMode } from 'react'
 import { createRoot } from 'react-dom/client'
-import '@kol/ui/theme.css'
-import '@kol/ui/css/components.css'
-import '@kol/ui/css/docs.css'
-import '@kol/ui/css/utilities.css'
+import './styles.css'
 import './index.css'
 import App from './App.jsx'
-import { applyTheme, getInitialTheme } from '@kol/ui'
+import { applyTheme, getInitialTheme } from './hooks/useTheme'
 
 const initialTheme = getInitialTheme()
 applyTheme(initialTheme)

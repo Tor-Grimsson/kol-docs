@@ -1,47 +1,8 @@
 import { useEffect } from 'react'
 import { Navigate, useOutletContext, useParams } from 'react-router-dom'
-import { DocsArticle, DocsCodeBlock, DocsHeader } from '@kol/docs'
+import { DocsArticle, DocsHeader } from '../components/docs'
 import { getPage } from '../data/wikiPages.js'
-
-const renderBlock = (block) => {
-  if (!block) return null
-
-  switch (block.type) {
-    case 'paragraph':
-      return (
-        <p className="text-base leading-relaxed text-fg-80">
-          {block.text}
-        </p>
-      )
-    case 'list':
-      return (
-        <ul className="wiki-list">
-          {block.items?.map((item) => (
-            <li key={item} className="mb-2 last:mb-0">
-              {item}
-            </li>
-          ))}
-        </ul>
-      )
-    case 'code':
-      return <DocsCodeBlock code={block.code} />
-    case 'callout':
-      return (
-        <div className="wiki-callout" data-tone={block.tone}>
-          {block.title ? (
-            <p className="text-sm font-semibold uppercase tracking-[0.2em]">
-              {block.title}
-            </p>
-          ) : null}
-          <p className="mt-2 text-sm text-fg-80">
-            {block.text}
-          </p>
-        </div>
-      )
-    default:
-      return null
-  }
-}
+import WikiBlockRenderer from '../components/WikiBlockRenderer.jsx'
 
 const WikiArticle = () => {
   const { pageSlug } = useParams()
@@ -92,11 +53,7 @@ const WikiArticle = () => {
               ) : null}
             </div>
             <div className="space-y-4">
-              {section.content?.map((block, index) => (
-                <div key={`${section.id}-block-${index}`}>
-                  {renderBlock(block)}
-                </div>
-              ))}
+              <WikiBlockRenderer blocks={section.content} />
             </div>
           </DocsArticle>
 
@@ -106,13 +63,7 @@ const WikiArticle = () => {
                 <h3 className="text-xl font-semibold text-fg-88">
                   {subsection.title}
                 </h3>
-                <div className="space-y-4">
-                  {subsection.content?.map((block, index) => (
-                    <div key={`${subsection.id}-block-${index}`}>
-                      {renderBlock(block)}
-                    </div>
-                  ))}
-                </div>
+                <WikiBlockRenderer blocks={subsection.content} />
               </DocsArticle>
             </div>
           ))}

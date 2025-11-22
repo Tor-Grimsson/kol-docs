@@ -1,0 +1,258 @@
+@import "tailwindcss";
+
+/**
+ * Simplified Design System for Wiki/Docs
+ * Consolidates: theme.css + components.css + utilities.css + docs.css
+ */
+
+/* ============================================================================
+ * DESIGN TOKENS - THEME
+ * ============================================================================ */
+
+@theme {
+  /* Fonts */
+  --kol-font-family-body: 'Inter Tight', system-ui, -apple-system, sans-serif;
+  --kol-font-family-heading: 'Inter Tight', system-ui, sans-serif;
+  --kol-font-family-mono: 'SFMono-Regular', Consolas, 'Liberation Mono', Menlo, monospace;
+
+  /* Brand Colors */
+  --kol-color-brand-dark: #1e1e21;
+  --kol-color-brand-light: #fcfbf8;
+  --kol-color-brand-yellow: #f5d245;
+  --kol-color-absolute-black: #000000;
+  --kol-color-absolute-white: #ffffff;
+
+  /* Surfaces - Light Mode */
+  --kol-surface-primary: #fafafa;
+  --kol-surface-on-primary: #121215;
+  --kol-surface-secondary: #f2f2f2;
+  --kol-surface-on-secondary: #19191d;
+  --kol-surface-inverse: #0e0e11;
+  --kol-surface-on-inverse: #fcfbf8;
+
+  /* Borders */
+  --kol-border-default: color-mix(in srgb, var(--kol-surface-on-primary) 8%, transparent);
+  --kol-border-subtle: color-mix(in srgb, var(--kol-surface-on-primary) 4%, transparent);
+}
+
+/* Dark Mode */
+@media (prefers-color-scheme: dark) {
+  @theme {
+    --kol-surface-primary: #0e0e11;
+    --kol-surface-on-primary: #fcfbf8;
+    --kol-surface-secondary: #1a1a1e;
+    --kol-surface-on-secondary: #f8f8f8;
+    --kol-surface-inverse: #fafafa;
+    --kol-surface-on-inverse: #121215;
+  }
+}
+
+/* ============================================================================
+ * TYPOGRAPHY COMPONENTS
+ * ============================================================================ */
+
+@layer components {
+  /* Headings */
+  .kol-heading-xl {
+    font-family: var(--kol-font-family-heading);
+    font-weight: 600;
+    font-size: clamp(32px, 4vw, 48px);
+    line-height: 110%;
+    color: var(--kol-surface-on-primary);
+  }
+
+  .kol-heading-lg {
+    font-family: var(--kol-font-family-heading);
+    font-weight: 600;
+    font-size: clamp(24px, 3vw, 32px);
+    line-height: 120%;
+    color: var(--kol-surface-on-primary);
+  }
+
+  .kol-heading-md {
+    font-family: var(--kol-font-family-heading);
+    font-weight: 600;
+    font-size: clamp(18px, 2vw, 24px);
+    line-height: 130%;
+    color: var(--kol-surface-on-primary);
+  }
+
+  .kol-heading-sm {
+    font-family: var(--kol-font-family-heading);
+    font-weight: 600;
+    font-size: clamp(16px, 1.5vw, 18px);
+    line-height: 140%;
+    color: var(--kol-surface-on-primary);
+  }
+
+  /* Body Text */
+  .kol-body-base {
+    font-family: var(--kol-font-family-body);
+    font-weight: 400;
+    font-size: 16px;
+    line-height: 150%;
+    color: var(--kol-surface-on-primary);
+  }
+
+  .kol-body-sm {
+    font-family: var(--kol-font-family-body);
+    font-weight: 400;
+    font-size: 14px;
+    line-height: 150%;
+    color: var(--kol-surface-on-primary);
+  }
+
+  .kol-body-xs {
+    font-family: var(--kol-font-family-body);
+    font-weight: 400;
+    font-size: 12px;
+    line-height: 150%;
+    color: color-mix(in srgb, var(--kol-surface-on-primary) 80%, transparent);
+  }
+
+  /* Code */
+  .kol-code-inline {
+    font-family: var(--kol-font-family-mono);
+    font-size: 14px;
+    background: color-mix(in srgb, var(--kol-surface-on-primary) 8%, transparent);
+    padding: 2px 6px;
+    border-radius: 4px;
+  }
+
+  .kol-code-block {
+    font-family: var(--kol-font-family-mono);
+    font-size: 14px;
+    line-height: 150%;
+    background: color-mix(in srgb, var(--kol-surface-on-primary) 4%, transparent);
+    padding: 16px;
+    border-radius: 8px;
+    overflow-x: auto;
+  }
+
+  /* Links */
+  .kol-link {
+    color: var(--kol-surface-on-primary);
+    text-decoration: underline;
+    text-decoration-color: color-mix(in srgb, var(--kol-surface-on-primary) 24%, transparent);
+    text-underline-offset: 2px;
+    transition: text-decoration-color 0.2s;
+  }
+
+  .kol-link:hover {
+    text-decoration-color: var(--kol-surface-on-primary);
+  }
+
+  /* Buttons */
+  .kol-btn {
+    font-family: var(--kol-font-family-body);
+    font-weight: 500;
+    font-size: 14px;
+    padding: 8px 16px;
+    border-radius: 4px;
+    border: 1px solid var(--kol-border-default);
+    background: var(--kol-surface-secondary);
+    color: var(--kol-surface-on-secondary);
+    cursor: pointer;
+    transition: all 0.2s;
+  }
+
+  .kol-btn:hover {
+    background: color-mix(in srgb, var(--kol-surface-on-primary) 8%, var(--kol-surface-secondary));
+  }
+
+  .kol-btn-primary {
+    background: var(--kol-surface-on-primary);
+    color: var(--kol-surface-primary);
+    border-color: var(--kol-surface-on-primary);
+  }
+
+  .kol-btn-primary:hover {
+    background: color-mix(in srgb, var(--kol-surface-primary) 10%, var(--kol-surface-on-primary));
+  }
+
+  /* Cards */
+  .kol-card {
+    background: var(--kol-surface-secondary);
+    border: 1px solid var(--kol-border-default);
+    border-radius: 8px;
+    padding: 16px;
+  }
+
+  /* Dividers */
+  .kol-divider {
+    border-bottom: 1px solid var(--kol-border-subtle);
+  }
+}
+
+/* ============================================================================
+ * UTILITIES
+ * ============================================================================ */
+
+@layer utilities {
+  /* Layout */
+  .flex-center {
+    @apply flex justify-center items-center;
+  }
+
+  /* Text */
+  .text-auto {
+    color: var(--kol-surface-on-primary);
+  }
+
+  .text-muted {
+    color: color-mix(in srgb, var(--kol-surface-on-primary) 64%, transparent);
+  }
+
+  /* Backgrounds */
+  .bg-auto {
+    background-color: var(--kol-surface-primary);
+  }
+
+  .bg-surface-inverse {
+    background-color: var(--kol-surface-inverse);
+    color: var(--kol-surface-on-inverse);
+  }
+
+  /* Opacity Backgrounds */
+  .bg-fg-04 { background-color: color-mix(in srgb, var(--kol-surface-on-primary) 4%, transparent); }
+  .bg-fg-08 { background-color: color-mix(in srgb, var(--kol-surface-on-primary) 8%, transparent); }
+  .bg-fg-16 { background-color: color-mix(in srgb, var(--kol-surface-on-primary) 16%, transparent); }
+  .bg-fg-24 { background-color: color-mix(in srgb, var(--kol-surface-on-primary) 24%, transparent); }
+
+  /* Opacity Borders */
+  .border-fg-08 { border-color: color-mix(in srgb, var(--kol-surface-on-primary) 8%, transparent); }
+  .border-fg-16 { border-color: color-mix(in srgb, var(--kol-surface-on-primary) 16%, transparent); }
+
+  /* Screen reader only */
+  .sr-only {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    padding: 0;
+    margin: -1px;
+    overflow: hidden;
+    clip: rect(0, 0, 0, 0);
+    white-space: nowrap;
+    border-width: 0;
+  }
+}
+
+/* ============================================================================
+ * ANIMATIONS
+ * ============================================================================ */
+
+@keyframes fade-in {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+@keyframes slide-up {
+  from {
+    opacity: 0;
+    transform: translateY(1rem);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}

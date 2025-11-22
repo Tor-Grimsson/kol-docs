@@ -1,3 +1,5 @@
+import { normalizeBlocks } from '../utils/wikiSchema.js'
+
 const pageContent = {
   'theme-system': {
     slug: 'theme-system',
@@ -38,6 +40,13 @@ const pageContent = {
             tone: 'accent',
             title: 'Use CSS variables first',
             text: 'Treat Tailwind utilities as helpers. When building wiki primitives prefer CSS variables from `theme.css` so styles stay aligned when tokens shift.'
+          },
+          {
+            type: 'quote',
+            content: {
+              text: 'If the wiki feels identical to prod we can prototype faster without breaking trust.',
+              attribution: 'Docs System'
+            }
           }
         ],
         subsections: [
@@ -91,6 +100,33 @@ const pageContent = {
             type: 'callout',
             title: 'Tailwind 4 tip',
             text: 'When you need custom utilities add them via local CSS `@layer` blocks instead of editing the shared design system.'
+          },
+          {
+            type: 'gallery',
+            content: {
+              layout: 'rows',
+              spacing: 12,
+              photos: [
+                {
+                  src: 'https://images.unsplash.com/photo-1472289065668-ce650ac443d2?auto=format&fit=crop&w=1200&q=80',
+                  width: 1200,
+                  height: 800,
+                  alt: 'Surface cards mock'
+                },
+                {
+                  src: 'https://images.unsplash.com/photo-1500530855697-b586d89ba3ee?auto=format&fit=crop&w=1200&q=80',
+                  width: 1200,
+                  height: 800,
+                  alt: 'Token grid detail'
+                },
+                {
+                  src: 'https://images.unsplash.com/photo-1498050108023-c5249f4df085?auto=format&fit=crop&w=1200&q=80',
+                  width: 1200,
+                  height: 800,
+                  alt: 'Docs dark mode view'
+                }
+              ]
+            }
           }
         ]
       }
@@ -239,6 +275,28 @@ export const Article = () => (
   }
 }
 
+const normalizeSections = (sections = []) =>
+  sections.map((section) => ({
+    ...section,
+    content: normalizeBlocks(section.content || []),
+    subsections: section.subsections
+      ? section.subsections.map((subsection) => ({
+          ...subsection,
+          content: normalizeBlocks(subsection.content || [])
+        }))
+      : []
+  }))
+
+const normalizedPages = Object.fromEntries(
+  Object.entries(pageContent).map(([slug, page]) => [
+    slug,
+    {
+      ...page,
+      sections: normalizeSections(page.sections || [])
+    }
+  ])
+)
+
 const navigationConfig = [
   {
     id: 'foundations',
@@ -257,7 +315,7 @@ const navigationConfig = [
 export const wikiNavigation = navigationConfig.map((section) => ({
   ...section,
   pages: section.items
-    .map((slug) => pageContent[slug])
+    .map((slug) => normalizedPages[slug])
     .filter(Boolean)
 }))
 
@@ -265,9 +323,13 @@ export const wikiTabs = [
   { id: 'overview', label: 'Overview', path: '/' },
   { id: 'theme', label: 'Theme', path: '/page/theme-system' },
   { id: 'layout', label: 'Layout', path: '/page/docs-layout' },
-  { id: 'ops', label: 'Ops', path: '/page/collaboration-guide' }
+  { id: 'ops', label: 'Ops', path: '/page/collaboration-guide' },
+  { id: 'input', label: 'Input', path: '/input' },
+  { id: 'new', label: 'New', path: '/new' },
+  { id: 'databases', label: 'Databases', path: '/databases' },
+  { id: 'media', label: 'Media', path: '/media' }
 ]
 
-export const wikiPages = pageContent
+export const wikiPages = normalizedPages
 
-export const getPage = (slug) => pageContent[slug]
+export const getPage = (slug) => normalizedPages[slug]
