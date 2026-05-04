@@ -22,3 +22,9 @@ dist-ssr
 *.njsproj
 *.sln
 *.sw?
+
+# extra
+/_ref/
+/.claude/
+LLM_RULES.md
+/docs/
